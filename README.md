@@ -33,18 +33,8 @@
      
      几天前在玩FL，鼓捣出来一个两分钟的纯音乐，完结后取名困难症，于是取了 “原木的块”
      
+     没搞明白怎么直接在这放播放器，路径是 Record\audio\原木的块.mp3
 
-
-<style>
-@import url('https://your-repo-url/raw/main/styles.css');
-</style>
-
-<div style="text-align: center;">
-  <audio class="custom-audio" controls>
-    <source src="Record/audio/原木的块.mp3" type="audio/mpeg">
-    僵王正在大开杀戒
-  </audio>
-</div>
 ---
 
 * ##### 勇闯西点镇成为僵王
