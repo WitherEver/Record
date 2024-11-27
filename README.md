@@ -34,14 +34,17 @@
      几天前在玩FL，鼓捣出来一个两分钟的纯音乐，完结后取名困难症，于是取了 “原木的块”
      
 
+
+<style>
+@import url('https://your-repo-url/raw/main/styles.css');
+</style>
+
 <div style="text-align: center;">
-  <audio controls>
-    <audio controls style="background-color: white; color: black; border: 1px solid #ccc;">
-    <source src="audio/原木的块.mp3" type="audio/mpeg">
-    浏览器的 audio 元素被僵王吃掉了！
+  <audio class="custom-audio" controls>
+    <source src="Record/audio/原木的块.mp3" type="audio/mpeg">
+    僵王正在大开杀戒
   </audio>
 </div>
-
 ---
 
 * ##### 勇闯西点镇成为僵王
