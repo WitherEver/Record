@@ -19,8 +19,8 @@
 ---
 
 * ### 1 - 少年英雄派
- - #### [原木的块](md\role\JiangWang\原木的块.md)
- - #### [勇闯西点成为僵王](md\role\JiangWang\西点.md)
+ - #### [原木的块](md/role/JiangWang/原木的块.md)
+ - #### [勇闯西点成为僵王](md/role/JiangWang/西点.md)
 
 ---
 
