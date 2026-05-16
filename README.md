@@ -21,11 +21,7 @@
 
 ---
 ## 柱状图
-<img src="2025/2025部分词语出现次数.png" style="width: 30%; height: auto;">
-
-***仅统计"2025\images_2025"下的所有图片。***
-
-***（PP-OCRv5 + Excel）***
+<img src="2025/2025部分词语出现次数.png" style="width: 30%; height: auto;"> <img src="2026/2026部分词语出现次数_暂时.png" style="width: 30%; height: auto;">
 
 ---
 ## 本年
