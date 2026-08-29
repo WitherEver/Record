@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>赛博史记 · 图鉴</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <h1 id="site-title">赛博史记</h1>
+        <span id="site-sub" class="muted">图鉴</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="searchbox">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          <input id="search" type="search" data-i18n-placeholder="searchPlaceholder" autocomplete="off" spellcheck="false">
+        </div>
+        <button id="lang-btn" class="icon-btn lang-btn" data-i18n-title="lang" data-i18n-aria="lang">EN</button>
+        <button id="theme-btn" class="icon-btn" title="切换主题" aria-label="切换主题">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="chips" class="chips" aria-label="筛选"></nav>
+  </header>
+
+  <main>
+    <div id="grid" class="grid" role="list"></div>
+    <div id="sentinel" class="sentinel" aria-hidden="true"></div>
+    <div id="empty" class="empty" hidden>
+      <p data-i18n="emptyTitle"></p>
+      <p class="muted small" data-i18n="emptyHint"></p>
+    </div>
+    <div id="loading" class="loading muted" hidden data-i18n="loading"></div>
+  </main>
+
+  <footer class="footer muted small">
+    <span id="stats">—</span>
+  </footer>
+</div>
+
+<!-- 图片查看器 -->
+<div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="图片查看">
+  <div class="viewer-top">
+    <div class="viewer-info">
+      <div id="viewer-name" class="viewer-name"></div>
+      <div id="viewer-meta" class="viewer-meta muted small"></div>
+    </div>
+    <div class="viewer-tools">
+      <button id="v-prev" class="icon-btn" data-i18n-title="prev" data-i18n-aria="prev">‹</button>
+      <button id="v-next" class="icon-btn" data-i18n-title="next" data-i18n-aria="next">›</button>
+      <button id="v-zoom-in" class="icon-btn" data-i18n-title="zoomIn" data-i18n-aria="zoomIn">＋</button>
+      <button id="v-zoom-out" class="icon-btn" data-i18n-title="zoomOut" data-i18n-aria="zoomOut">－</button>
+      <button id="v-zoom-reset" class="icon-btn" data-i18n-title="zoomReset" data-i18n-aria="zoomReset">⤾</button>
+      <button id="v-close" class="icon-btn" data-i18n-title="close" data-i18n-aria="close">✕</button>
+    </div>
+  </div>
+  <div id="v-stage" class="v-stage">
+    <img id="v-img" alt="" draggable="false">
+    <div id="v-loading" class="v-loading muted">
+      <img src="./hetun.png" alt="" class="spin">
+      <span data-i18n="loading"></span>
+    </div>
+    <div id="v-error" class="v-error">
+      <span id="v-error-text">加载失败...</span>
+      <button id="v-retry" class="retry-btn" type="button" data-i18n="retry"></button>
+    </div>
+  </div>
+  <div id="v-counter" class="v-counter muted small"></div>
+</div>
+
+<noscript><p style="padding:2em;text-align:center">此页面需要启用 JavaScript 才能浏览。</p></noscript>
+
+<script src="./data/index.js"></script>
+<script src="./lang.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
