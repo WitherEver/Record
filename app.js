@@ -1,4 +1,3 @@
-/* 赛博史记图鉴 —— 纯静态浏览（无外部依赖） */
 'use strict';
 
 function $(sel, root) { return (root || document).querySelector(sel); }
@@ -42,7 +41,6 @@ if (window.__DATA__.subtitle) $('#site-sub').textContent = window.__DATA__.subti
 /* ---- 状态 ---- */
 const state = { query: '', scope: 'all', year: null, folder: null, sort: 'time' };
 const BATCH = 96;
-const LOAD_TIMEOUT = 5000;
 const MAX_TALL_WIDTH = 900;
 const SWIPE_MIN = 70, SWIPE_TIME = 600, SWIPE_RATIO = 1.5;
 let filtered = [];
@@ -95,8 +93,10 @@ function buildChips() {
   years.sort().reverse();
   folders.sort();
   const featuredCnt = DATA.items.filter(i => i.featured).length;
+  const recentCnt = DATA.items.filter(i => i.recent).length;
   let html = '<span class="chip-group-label">' + t('scopeLabel') + '</span>';
   html += chipHTML('scope', 'all', t('allLabel'), DATA.items.length, state.scope === 'all');
+  if (recentCnt > 0) html += chipHTML('scope', 'recent', t('recentLabel'), recentCnt, state.scope === 'recent');
   html += chipHTML('scope', 'featured', t('featuredLabel'), featuredCnt, state.scope === 'featured');
   if (years.length > 1) {
     html += '<span class="chip-group-label">' + t('yearLabel') + '</span>';
@@ -146,6 +146,7 @@ searchInput.addEventListener('input', debounce(() => { state.query = searchInput
 function computeFiltered() {
   const q = state.query.trim().toLowerCase();
   let list = DATA.items;
+  if (state.scope === 'recent') list = list.filter(it => it.recent);
   if (state.scope === 'featured') list = list.filter(it => it.featured);
   if (state.year) list = list.filter(it => it.year === state.year);
   if (state.folder) list = list.filter(it => it.folder === state.folder);
@@ -221,7 +222,7 @@ grid.addEventListener('error', e => {
 const viewer = $('#viewer'), vImg = $('#v-img'), vStage = $('#v-stage'),
   vLoading = $('#v-loading'), vError = $('#v-error'), vErrorText = $('#v-error-text'),
   vName = $('#viewer-name'), vMeta = $('#viewer-meta'), vCounter = $('#v-counter');
-let viewerList = [], viewerIndex = 0, zoom = 1, loadToken = 0, loadTimer = null;
+let viewerList = [], viewerIndex = 0, zoom = 1, loadToken = 0;
 let viewerErrorKey = null;
 
 function setErrorText(key) {
@@ -238,7 +239,6 @@ function openViewer(idx) {
   loadIntoViewer(viewerList[viewerIndex]);
 }
 function closeViewer() {
-  clearTimeout(loadTimer);
   viewer.classList.remove('open');
   document.body.style.overflow = '';
   vImg.removeAttribute('src');
@@ -246,10 +246,8 @@ function closeViewer() {
 }
 function loadIntoViewer(item) {
   const token = ++loadToken;
-  clearTimeout(loadTimer);
   vError.classList.remove('show');
   vLoading.classList.add('show');
-  setErrorText('loadFailed');
   vName.textContent = item.name;
   vMeta.textContent = (item.width && item.height ? item.width + '×' + item.height + ' · ' : '') +
     (item.size ? formatSize(item.size) + ' · ' : '') + item.file;
@@ -267,19 +265,13 @@ function loadIntoViewer(item) {
   }
 
   const full = new Image();
-  loadTimer = setTimeout(() => {
-    if (token !== loadToken) return;
-    vLoading.classList.remove('show');
-    vError.classList.add('show');
-  }, LOAD_TIMEOUT);
   full.onload = function () {
     if (token !== loadToken) return;
-    clearTimeout(loadTimer);
     vImg.src = full.src;
     vLoading.classList.remove('show');
     applyZoom();
   };
-  full.onerror = function () { /* 失败也等计时器统一提示 */ };
+  full.onerror = function () { /* 静默：保持加载中，网络恢复后 onload 自动接管 */ };
 
   full.src = toUrl(item.file);
 
@@ -369,6 +361,34 @@ vStage.addEventListener('touchend', e => {
 }, { passive: true });
 
 window.addEventListener('resize', debounce(() => { if (viewer.classList.contains('open')) applyZoom(); }, 120));
+
+/* ---- 左下角菜单 ---- */
+const menuBtn = $('#menu-btn'), menuEl = $('#menu'), aboutModal = $('#about-modal');
+function showMenu(show) {
+  menuEl.classList.toggle('show', show);
+  menuBtn.setAttribute('aria-expanded', show ? 'true' : 'false');
+}
+menuBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  showMenu(!menuEl.classList.contains('show'));
+});
+document.addEventListener('click', e => {
+  if (menuEl.classList.contains('show') && !menuEl.contains(e.target) && e.target !== menuBtn) showMenu(false);
+});
+$('#menu-about').addEventListener('click', () => {
+  showMenu(false);
+  aboutModal.classList.add('show');
+});
+$('#about-close').addEventListener('click', () => aboutModal.classList.remove('show'));
+aboutModal.addEventListener('click', e => { if (e.target === aboutModal) aboutModal.classList.remove('show'); });
+
+window.addEventListener('scroll', () => {
+  const shouldHide = window.scrollY > 8;
+  // 同时控制三个元素的 hidden 类
+  menuBtn.classList.toggle('hidden', shouldHide);
+  menuEl.classList.toggle('hidden', shouldHide);
+  aboutModal.classList.toggle('hidden', shouldHide);
+}, { passive: true });
 
 /* ---- 启动 ---- */
 applyLang();

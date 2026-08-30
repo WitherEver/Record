@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>赛博史记 · 图鉴</title>
+<link rel="icon" href="./hetun.png" type="image/png">
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -45,6 +46,30 @@
   </footer>
 </div>
 
+<!-- 左下角菜单 -->
+<button id="menu-btn" class="menu-btn" data-i18n-title="menu" data-i18n-aria="menu" aria-haspopup="true" aria-expanded="false">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+</button>
+<nav id="menu" class="menu" aria-label="menu" data-i18n-aria="menu">
+  <a id="menu-repo" class="menu-item" href="https://github.com/WitherEver/Record" target="_blank" rel="noopener" data-i18n="menuRepo"></a>
+  <button id="menu-about" class="menu-item" type="button" data-i18n="menuAbout"></button>
+</nav>
+
+<!-- 相关弹窗 -->
+<div id="about-modal" class="modal" role="dialog" aria-modal="true" aria-label="menuAbout" data-i18n-aria="menuAbout">
+  <div class="modal-panel">
+    <button id="about-close" class="modal-close icon-btn" data-i18n-title="close" data-i18n-aria="close">✕</button>
+    <h2 class="about-title" data-i18n="aboutTitle"></h2>
+    <p class="about-q" data-i18n="aboutQ1"></p>
+    <p class="about-a" data-i18n="aboutA1"></p>
+    <p class="about-q" data-i18n="aboutQ2"></p>
+    <p class="about-a" data-i18n="aboutA2"></p>
+    <p class="about-q" data-i18n="aboutQ3"></p>
+    <p class="about-a" data-i18n="aboutA3"></p>
+    <p class="about-highlight" data-i18n="aboutA3b"></p>
+  </div>
+</div>
+
 <!-- 图片查看器 -->
 <div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="图片查看">
   <div class="viewer-top">
@@ -68,7 +93,7 @@
       <span data-i18n="loading"></span>
     </div>
     <div id="v-error" class="v-error">
-      <span id="v-error-text">加载失败...</span>
+      <span id="v-error-text">无网络连接</span>
       <button id="v-retry" class="retry-btn" type="button" data-i18n="retry"></button>
     </div>
   </div>
