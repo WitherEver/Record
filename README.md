@@ -8,11 +8,25 @@
   </a>
 
 <p align="center">
-<span style="font-size: 20px; vertical-align: middle;">建议使用 --> </span>
+  <span style="font-size: 18px; letter-spacing: 2px;">↓ 浏览图库 ↓</span>
+</p>
+
+<p align="center">
   <a href="https://www.witherever.com">
-    <img src="https://img.shields.io/badge/赛博史记 · 图库-blue?-badge&logo=githubpages&logoSize=auto&labelColor=gray" alt="pages" style="vertical-align: middle;">
+    <img src="https://img.shields.io/static/v1?label=赛博史记&message=图库&color=55b3c3&labelColor=0d1117&style=flat&logo=cloudflare&logoColor=#F38020" alt="浏览图库" style="vertical-align: middle;">
   </a>
-  <span style="font-size: 20px; vertical-align: middle;"> <-- 进行浏览</span>
+</p>
+
+<!--
+<p align="center">
+  <span style="font-size: 18px; letter-spacing: 2px;">↓ 提交内容 ↓</span>
+</p>
+<p align="center">
+  <a href="https://apply.witherever.com">
+    <img src="https://img.shields.io/static/v1?label=赛博史记&message=提交&color=a855f7&labelColor=0d1117&style=flat&logo=cloudflare&logoColor=#F38020" alt="提交内容" style="vertical-align: middle;">
+  </a>
+</p>
+-->
 
 <!--
 <p align="center">
