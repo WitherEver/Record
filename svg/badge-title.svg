@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="80" viewBox="0 0 400 80" role="img" aria-label="赛博史记">
+  <defs>
+    <clipPath id="t1">
+      <rect width="400" height="80" rx="12"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#t1)">
+    <rect width="400" height="80" fill="#0d1117"/>
+  </g>
+  <rect x="0.75" y="0.75" width="398.5" height="78.5" rx="11.25"
+        fill="none" stroke="#F38020" stroke-width="1.5"/>
+  <text x="206" y="51" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif"
+        font-size="36" font-weight="700" fill="#e6edf3" letter-spacing="12">赛博史记</text>
+</svg>

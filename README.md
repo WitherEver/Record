@@ -1,40 +1,48 @@
-# <p align="center">《赛博史记》
+<p align="center">
+<img src="svg/badge-title.svg" alt="标题" height="48">
 
 <p align="center">
-<a href="https://www.bilibili.com/video/BV1GJ411x7h7/">
-  <img src="https://img.shields.io/badge/状态-正常维护-brightgreen" alt="pages" style="vertical-align: middle;">
-  <img src="https://img.shields.io/badge/留档数-300+-brightgreen" alt="pages" style="vertical-align: middle;">
-  <img src="https://img.shields.io/github/last-commit/WitherEver/Record" alt="pages" style="vertical-align: middle;">
+  <a href="https://www.bilibili.com/video/BV1GJ411x7h7/">
+    <img src="svg/badge-status-active.svg" alt="正常" height="28">
   </a>
-
-<p align="center">
-  <span style="font-size: 18px; letter-spacing: 2px;">↓ 浏览图库 ↓</span>
+<!--
+  <a href="https://www.bilibili.com/video/BV1GJ411x7h7/">
+    <img src="svg\badge-status-paused.svg" alt="暂停" height="28">
+  </a>
+  <a href="https://www.bilibili.com/video/BV1GJ411x7h7/">
+    <img src="svg\badge-status-archived.svg" alt="停止" height="28">
+  </a>
+-->
+  <a href="https://www.bilibili.com/video/BV1GJ411x7h7/">
+    <img src="svg/badge-count.svg" alt="留档数" height="28">
+  </a>
 </p>
 
 <p align="center">
   <a href="https://www.witherever.com">
-    <img src="https://img.shields.io/static/v1?label=赛博史记&message=图库&color=55b3c3&labelColor=0d1117&style=flat&logo=cloudflare&logoColor=#F38020" alt="浏览图库" style="vertical-align: middle;">
+    <img src="svg/badge-gallery.svg" alt="浏览图库" height="36">
   </a>
+<!--
+  <a href="https://apply.witherever.com">
+    <img src="svg/badge-submit.svg" alt="提交内容" height="36">
+  </a>
+-->
 </p>
 
 <!--
 <p align="center">
-  <span style="font-size: 18px; letter-spacing: 2px;">↓ 提交内容 ↓</span>
-</p>
-<p align="center">
-  <a href="https://apply.witherever.com">
-    <img src="https://img.shields.io/static/v1?label=赛博史记&message=提交&color=a855f7&labelColor=0d1117&style=flat&logo=cloudflare&logoColor=#F38020" alt="提交内容" style="vertical-align: middle;">
+  <a href="https://https://witherever.github.io/Record/">
+    <img src="svg/badge-gallery.svg" alt="浏览图库" height="36">
   </a>
 </p>
 -->
 
 <!--
 <p align="center">
-<span style="font-size: 20px; vertical-align: middle;">建议使用 </span>
   <a href="https://witherever.github.io/Record/">
-    <img src="https://img.shields.io/badge/赛博史记 · 图库-orange?-badge&logo=githubpages&logoSize=auto&labelColor=gray" alt="pages" style="vertical-align: middle;">
+    <img src="https://img.shields.io/static/v1?label=Cloudflare | 赛博史记&message=浏览图库&color=green&labelColor=0d1117&style=flat&logo=cloudflare&logoColor=F38020" alt="浏览图库">
   </a>
-  <span style="font-size: 20px; vertical-align: middle;"> 进行浏览</span>
+</p>
 -->
 
 * 记录一些有趣的 <b>回忆</b> 或 <s><b>黑历史</b></s> ，它们会以文字、图片等形式留存。
