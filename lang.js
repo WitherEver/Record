@@ -31,6 +31,7 @@ window.__LANG__ = {
   "lang": "切换语言",
   "menu": "菜单",
   "menuRepo": "前往/返回 GitHub ",
+  "menuApply": "申请留档",
   "menuAbout": "相关",
   "aboutTitle": "Q/A",
   "aboutQ1": "这是什么？",
@@ -43,7 +44,7 @@ window.__LANG__ = {
   "dataMissing": "索引数据缺失：未找到data/index.js",
   "titleSuffix": "· 图库",
   "fullTitle": "赛博史记",
-  "BuildTime": "构建于 "
+  "BuildTime": "构建于(UTC) "
  },
  "en": {
   "searchPlaceholder": "Search...",
@@ -88,7 +89,7 @@ window.__LANG__ = {
   "dataMissing": "Index data missing: data/index.js not found",
   "titleSuffix": "· Gallery",
   "fullTitle": "Cyber Chronicle",
-  "BuildTime": "Build Time "
+  "BuildTime": "Build Time(UTC) "
  },
  "ht": {
   "searchPlaceholder": "豚豚豚豚...",
@@ -133,6 +134,6 @@ window.__LANG__ = {
   "dataMissing": "豚豚豚豚豚豚：未找到data/index.js",
   "titleSuffix": "· 豚豚豚豚",
   "fullTitle": "豚豚豚豚",
-  "BuildTime": "豚豚豚豚豚 豚豚豚豚 "
+  "BuildTime": "豚豚豚豚豚 豚豚豚豚(豚豚，豚豚豚？) "
  }
 };
