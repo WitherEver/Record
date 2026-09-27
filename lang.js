@@ -22,15 +22,15 @@ window.__LANG__ = {
   "loading": "加载中...",
   "noNetwork": "设备无网络连接",
   "retry": "重试",
-  "prev": "上一张 (←)",
-  "next": "下一张 (→)",
+  "prev": "上一张",
+  "next": "下一张",
   "zoomIn": "放大",
   "zoomOut": "缩小",
   "zoomReset": "适应窗口",
   "close": "关闭",
   "lang": "切换语言",
   "menu": "菜单",
-  "menuRepo": "前往/返回 GitHub ",
+  "menuRepo": "返回 GitHub ",
   "menuApply": "申请留档",
   "menuAbout": "相关",
   "aboutTitle": "Q/A",
@@ -44,12 +44,14 @@ window.__LANG__ = {
   "dataMissing": "索引数据缺失：未找到data/index.js",
   "titleSuffix": "· 图库",
   "fullTitle": "赛博史记",
-  "BuildTime": "构建于(UTC) "
+  "BuildTime": "自动构建于(UTC) ",
+  "logsTitle": "日志",
+  "menuScrollbar": "显示原生滚动条"
  },
  "en": {
   "searchPlaceholder": "Search...",
   "emptyTitle": "No matching images",
-  "emptyHint": "Try clearing search or changing filters. Currently only supports searching by file name, no keyword classification for people, events, etc.",
+  "emptyHint": "Try clearing your search or changing filters. Search currently only supports file names; there is no keyword tagging for people, events, etc.",
   "stats": "{total} images · showing {shown}",
   "footerA": "Maintained by Wither",
   "footerB": "",
@@ -76,20 +78,21 @@ window.__LANG__ = {
   "close": "Close",
   "lang": "Switch language",
   "menu": "Menu",
-  "menuRepo": "Go to / Return to GitHub",
+  "menuRepo": "Back to GitHub",
   "menuAbout": "About",
   "aboutTitle": "Q/A",
   "aboutQ1": "What is this?",
-  "aboutA1": "A browsing site derived from Record, optimized for browsing.",
-  "aboutQ2": "Will this harm me?",
-  "aboutA2": "You're finished! The cat-eared pufferfish god is watching you. She'll poke you when you least expect it, poke you hard, poke you every day!",
-  "aboutQ3": "Why is the content here different from the repository?",
+  "aboutA1": "A more intuitive and easier-to-use browsing interface for images in the Record repository.",
+  "aboutQ2": "What harm will this do to me?",
+  "aboutA2": "You're done for! The cat-eared pufferfish god has her eye on you. She'll poke you when you least expect it—poke you hard, poke you every day!",
+  "aboutQ3": "Why does the content here differ from the repository?",
   "aboutA3": "一切皆有豚数...",
   "aboutA3b": "豚豚豚豚：豚豚豚豚豚豚，豚豚豚豚，豚豚豚豚。豚豚豚豚豚豚豚，豚豚豚豚，豚豚豚豚豚豚，豚豚豚豚豚豚。豚豚豚豚，豚“豚豚豚豚”豚。",
   "dataMissing": "Index data missing: data/index.js not found",
   "titleSuffix": "· Gallery",
   "fullTitle": "Cyber Chronicle",
-  "BuildTime": "Build Time(UTC) "
+  "BuildTime": "Build Time(UTC) ",
+  "menuScrollbar": "Show native scrollbar"
  },
  "ht": {
   "searchPlaceholder": "豚豚豚豚...",
@@ -134,6 +137,8 @@ window.__LANG__ = {
   "dataMissing": "豚豚豚豚豚豚：未找到data/index.js",
   "titleSuffix": "· 豚豚豚豚",
   "fullTitle": "豚豚豚豚",
-  "BuildTime": "豚豚豚豚豚 豚豚豚豚(豚豚，豚豚豚？) "
+  "BuildTime": "豚豚豚豚豚 豚豚豚豚(豚豚，豚豚豚？) ",
+  "logsTitle": "豚豚",
+  "menuScrollbar": "豚豚豚豚豚豚豚？"
  }
 };

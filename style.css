@@ -7,6 +7,7 @@
   --muted: #6e6e73;
   --border: rgba(0, 0, 0, 0.09);
   --accent: #1f85f2;
+  --accent2: #1f85f216;
   --accent-text: #ffffff;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 8px 26px rgba(0, 0, 0, 0.22);
@@ -15,6 +16,9 @@
   --tile-bg: #e9e9ec;
   --focus-ring: 0 0 0 3px rgba(31, 133, 242, 0.4);
   --radius: 12px;
+
+  --gold: #c49010;
+  --gold-glow: rgba(196, 144, 16, 0.4);
 }
 
 [data-theme="dark"] {
@@ -27,26 +31,34 @@
   --accent: #3f90e6;
   --accent-text: #ffffff;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 26px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 26px rgba(0, 0, 0, 0.35);
   --shadow-small: 0 4px 16px rgba(0, 0, 0, 0.6);
   --overlay: rgba(5, 5, 8, 0.72);
   --tile-bg: #2a2a30;
   --focus-ring: 0 0 0 3px rgba(63, 144, 230, 0.5);
+
+  --gold: #f5c542;
+  --gold-glow: rgba(245, 197, 66, 0.5);
 }
 
-/*----------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------*/
 * {
   box-sizing: border-box;
 }
-
+[hidden] {
+  display: none !important;/*---------------河豚怎么这么坏啊-----------------*/
+}
+/*------------------------------这是html,body--这是html,body--这是html,body--这是html,body-----------------------------*/
 html,
 body {
   margin: 0;
   padding: 0;
   background: var(--bg) !important;
   transition: none !important;
+  overflow-x: hidden;
 }
 
+/*------------------------------这是html,body--这是html,body--这是html,body--这是html,body-----------------------------*/
 body {
   background: var(--bg);
   color: var(--text);
@@ -57,8 +69,46 @@ body {
   /*transition: background-color 0.25s ease, color 0.25s ease;*/
   background: var(--bg) !important;
   transition: color 0.25s ease;
+  /*position: relative;*/
+
 }
 
+/*----------------------------------------------------------------------------------------------------------------侧边线条---------*/
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  top: 15%;
+  bottom: 15%;
+  width: 3px;
+  background-image: radial-gradient(circle,
+      color-mix(in srgb, var(--accent) 10%, transparent) 3px,
+      transparent 1.5px);
+  /*
+  background: linear-gradient(180deg,
+      transparent,
+      color-mix(in srgb, var(--accent) 25%, transparent) 30%,
+      color-mix(in srgb, var(--accent) 25%, transparent) 70%,
+      transparent);
+*/
+  background-size: 3px 18px;
+  background-repeat: repeat-y;
+  background-position: center;
+  mask-image: linear-gradient(180deg, transparent, black 25%, black 75%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, black 25%, black 75%, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::before {
+  left: calc(50vw - 700px - 16px);
+}
+
+body::after {
+  right: calc(50vw - 700px - 16px);
+}
+
+/*----------------------------------------------------------------------------------------------------------------侧边线条---------*/
 .muted {
   color: var(--muted);
 }
@@ -84,12 +134,66 @@ body {
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 16px;
+  border-bottom: 1px solid var(--accent2);
+  padding-left: calc(16px + var(--sbw, 0px) / 2);/*------帮助孤儿寻亲...----0925---*/
+  padding-right: calc(16px + var(--sbw, 0px) / 2);
   width: 100vw;
   margin-left: calc(-50vw + 50%);
 }
 
+/*---------------------------------------------------0922------顶栏线条------------------------------------------------*/
+.topbar::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent,
+      color-mix(in srgb, var(--accent) 18%, transparent) 50%,
+      transparent);
+  pointer-events: none;
+}
+
+/*-------------------------------------------------------------------------------------0922----------顶栏线条流动------*/
+.topbar::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent,
+      var(--gold) 50%,
+      transparent);
+  background-size: 200% 100%;
+  opacity: 0;
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+@keyframes baka-topbar-gold {
+  0% {
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  78% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/*-------------------------------------------------------------------------------------0922----------顶栏线条流动------*/
 .topbar-inner {
   display: flex;
   align-items: center;
@@ -99,12 +203,21 @@ body {
 }
 
 .brand h1 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   margin: 0;
-  letter-spacing: 0.02em;
+  user-select: none;
+  letter-spacing: 0.075em;
+  font-style: italic;
+  -webkit-user-select: none; /*--------------------*/
 }
 
+/*---------------------------------------------------0922------标题菱形------------------------------------------------
+.brand h1::before {
+  content: '◈ ';
+  color: var(--gold);
+}
+*/
 .brand #site-sub {
   margin-left: 6px;
   font-size: 13px;
@@ -136,6 +249,7 @@ body {
   fill: none;
   stroke-linecap: round;
   pointer-events: none;
+  z-index: 1;
 }
 
 .searchbox input {
@@ -147,12 +261,15 @@ body {
   color: var(--text);
   font-size: 14px;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  /*transition: border-color 0.15s ease, box-shadow 0.15s ease;-----0922*/
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.35s cubic-bezier(.2, 1.6, .4, 1);
 }
 
 .searchbox input:focus {
   border-color: var(--accent);
   box-shadow: var(--focus-ring);
+  transform: scale(1.02);
 }
 
 .searchbox input::placeholder {
@@ -172,15 +289,30 @@ body {
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease,
+    transform 0.32s cubic-bezier(.2, 1.6, .4, 1);
 }
 
 .icon-btn:hover {
   background: var(--panel-2);
+  transform: scale(1.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 0 16px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.icon-btn:has(.icon-sun):hover,
+.icon-btn:has(.icon-moon):hover {
+  transform: scale(1.08);
+}
+
+.icon-btn:has(.icon-sun):active,
+.icon-btn:has(.icon-moon):active {
+  transform: scale(0.95);
 }
 
 .icon-btn:active {
-  transform: scale(0.94);
+  transform: rotate(30deg) scale(0.9);
 }
 
 .icon-btn:focus-visible {
@@ -199,9 +331,18 @@ body {
 }
 
 .lang-btn {
-  width: auto;
+  /*width: auto;*/
+  width: 34px;/*-------河豚干的------*/
   padding: 0 10px;
   font-size: 13px;
+}
+
+.lang-btn:hover {
+  transform: scale(1.08);
+}
+
+.lang-btn:active {
+  transform: rotate(30deg) scale(0.95);
 }
 
 [data-theme="light"] .icon-moon {
@@ -212,12 +353,21 @@ body {
   display: none;
 }
 
+/*-------------------------------------------------切换时SVG旋转动效----------关键帧 theme-icon-spin -------------*/
+[data-theme="light"] .icon-sun,
+[data-theme="dark"] .icon-moon {
+  animation: theme-icon-spin 0.5s cubic-bezier(.2, 1.4, .4, 1);
+}
+
 .chips {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 0 0 10px;
+  padding: 10px 0 14px;
   scrollbar-width: none;
+  padding: 10px 6px 14px;
+  margin-left: -6px;
+  margin-right: -6px;
 }
 
 .chips::-webkit-scrollbar {
@@ -239,7 +389,13 @@ body {
 
 .chip:hover {
   color: var(--text);
-  border-color: var(--muted);
+  border-color: var(--accent);
+  transform: translateY(-2px) rotate(-1deg) scale(1.03);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.chip:active {
+  transform: translateY(-1px) rotate(-1deg) scale(0.98);
 }
 
 .chip.active {
@@ -263,7 +419,7 @@ body {
   padding-right: 2px;
 }
 
-/*-------------------------------------------------------------------------------------------------------图块/网格---------------------------*/
+/*-----------------------------------------------------------------------------------------图块/网格---------------------------*/
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -325,13 +481,81 @@ body {
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--tile-bg);
+
   box-shadow: var(--shadow);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  /*transition: transform 0.18s ease, box-shadow 0.18s ease;*/
+  /*-------0922---------弹性*/
+  transition: transform 0.45s cubic-bezier(.2, 1.6, .4, 1),
+    box-shadow 0.35s ease,
+    border-radius 0.35s ease;
+  /*--0922--常驻描边
+  border: 1px solid color-mix(in srgb, var(--gold) 25%, transparent);
+  box-shadow: var(--shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+*/
+}
+
+.tile:hover {
+  z-index: 55; /*------顶栏不会遮挡图块焦点辉光-----*/
 }
 
 .tile:hover .thumb {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px) rotate(-1.5deg) scale(1.03);
+  border-radius: 16px;
+  /*
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent) 40%, transparent),
+    0 0 36px color-mix(in srgb, var(--accent) 30%, transparent),
+    0 16px 34px rgba(0, 0, 0, 0.28);
+    */
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 22px color-mix(in srgb, var(--accent) 35%, transparent),
+    0 0 44px color-mix(in srgb, var(--accent) 30%, transparent),
+    /*河豚怎么这么坏啊*/
+    var(--shadow-lg);
+}
+
+.tile:nth-child(3n+2):hover .thumb {
+  transform: translateY(-4px) rotate(1.5deg) scale(1.03);
+}
+
+.tile:nth-child(3n+3):hover .thumb {
+  transform: translateY(-5px) rotate(0.5deg) scale(1.04);
+}
+
+.tile:hover .thumb img.loaded {
+  transform: scale(1.04) rotate(-0.8deg);
+}
+
+/*---------------------------缩略图加载微光----------------*/
+.thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 25%,
+    color-mix(in srgb, var(--panel) 70%, transparent) 50%,
+    transparent 75%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.thumb:not(.failed):not(:has(img.loaded))::before {
+  opacity: 1;
+  animation: thumb-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes thumb-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -100% 0; }
 }
 
 .thumb img {
@@ -340,8 +564,9 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(.2, 1.6, .4, 1);
 }
 
 .thumb img.loaded {
@@ -349,11 +574,11 @@ body {
 }
 
 .thumb img.failed {
-  opacity: 0;
+  opacity: 0; /*---似了---*/
 }
 
 .thumb.failed::after {
-  content: '✕';
+  content: 'PUFFER ATE IMG!!!';
   position: absolute;
   inset: 0;
   display: flex;
@@ -374,6 +599,11 @@ body {
   word-break: break-all;
 }
 
+/*
+[data-theme="dark"] .tile:hover .tile-name {
+  color: var(--gold);
+}
+*/
 .tile-tag {
   position: absolute;
   top: 4px;
@@ -445,7 +675,7 @@ body {
   gap: 12px;
   padding: 12px 14px;
   background: var(--panel);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--accent2);
   box-shadow: var(--shadow);
 }
 
@@ -473,6 +703,14 @@ body {
   flex: 0 0 auto;
 }
 
+.viewer-tools .icon-btn:hover {
+  transform: scale(1.12);
+}
+
+.viewer-tools .icon-btn:active {
+  transform: rotate(15deg) scale(0.9);
+}
+
 .v-stage {
   flex: 1;
   display: flex;
@@ -481,12 +719,21 @@ body {
   position: relative;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  scrollbar-width: none;      /*---滚动条---*/
+}
+.v-stage::-webkit-scrollbar {
+  display: none;
 }
 
 .v-stage img {
   display: block;
   margin: auto;
   transform-origin: center center;
+  user-select: none;
+  -webkit-user-select: none;/*---------------*/
+  -webkit-user-drag: none;
 }
 
 .v-stage img:not([src]) {
@@ -520,9 +767,10 @@ body {
 }
 
 .v-loading {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
 }
 
 .spin {
@@ -544,11 +792,19 @@ body {
 }
 
 .v-error {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   color: #d64545;
   font-weight: 600;
+  white-space: nowrap;
+  max-width: calc(100vw - 40px);
+}
+
+.v-error #v-error-text,
+.v-error .retry-btn {
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 .retry-btn {
@@ -602,15 +858,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.15s ease;
+  transition: transform 0.55s cubic-bezier(.2, 1.6, .4, 1),
+    opacity 0.55s ease,
+    background-color 0.15s ease;
 }
 
 .menu-btn:hover {
   background: var(--panel);
+  transform: scale(1.14);
+  box-shadow: var(--shadow-small), 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.menu-btn:active {
+  transform: rotate(30deg) scale(0.9);
 }
 
 .menu-btn.hidden {
-  transform: translateX(-150%);
+  transform: translateX(-150%) rotate(30deg) scale(0.85);
   opacity: 0;
   pointer-events: none;
 }
@@ -663,10 +927,18 @@ body {
   text-align: left;
   text-decoration: none;
   cursor: pointer;
+  transform-origin: left center;
+  transition: background-color 0.15s ease,
+              transform 0.32s cubic-bezier(.2, 1.6, .4, 1);
 }
 
 .menu-item:hover {
   background: var(--panel-2);
+  transform: scale(1.06);
+}
+
+.menu-item:active {
+  transform: scale(0.95);
 }
 
 .menu-item:focus-visible {
@@ -763,6 +1035,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
   }
 
   .tile {
@@ -783,7 +1057,301 @@ body {
   -webkit-backdrop-filter: none !important;
 }
 
-/*----------------------------------------------------------------------------------------------BAKA!!!!!!!!!!!!!!------------------------*/
+.brand h1 {
+  cursor: pointer;
+  transition: scale 0.3s cubic-bezier(.2, 1.6, .4, 1);
+}
+
+.brand h1:hover {
+  scale: 1.05;
+}
+
+.brand h1.spin-once {
+  animation: title-spin-bounce 0.9s cubic-bezier(.2, 1.4, .4, 1);
+}
+
+.brand h1.spin-Hetun {
+  animation: title-Hetun-spin 0.15s linear infinite; /*----------------标题转转转---------------*/
+}
+
+@keyframes title-Hetun-spin {
+  from { rotate: 0deg; }
+  to   { rotate: 360deg; }
+}
+
+@keyframes title-spin-bounce {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
+
+@keyframes theme-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*----------------------------------------------------------------------0923--------原图查看器切图按钮---------------------------*/
+.viewer-top {
+  position: relative;
+  z-index: 105;
+}
+
+.v-prev,
+.v-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  z-index: 102;
+  opacity: 0.5;
+  transition: opacity 0.5s ease,
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.v-prev {
+  left: 16px;
+}
+
+.v-next {
+  right: 16px;
+}
+
+.v-prev.dim,
+.v-next.dim {
+  opacity: 0.1;
+}
+
+/*--------------------------------------------------------------------------------------*/
+
+.v-prev:hover,
+.v-next:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+/*---------0924---------------*/
+.v-prev:active,
+.v-next:active {
+  opacity: 1;
+  transform: translateY(-50%) scale(0.95);
+}
+
+.v-prev svg,
+.v-next svg {
+  width: 22px;
+  height: 22px;
+}
+
+/*--------------------------触摸设备隐藏---------------------------*/
+@media (max-width: 640px),
+(hover: none),
+(pointer: coarse) {
+
+  .v-prev,
+  .v-next {
+    display: none;
+  }
+}
+
+.v-stage.draggable {
+  cursor: grab;
+}
+
+.v-stage.dragging {
+  cursor: grabbing;
+}
+
+/*-----------------------------------------------------------------日志按钮---------------------------*/
+#log-btn {
+  position: absolute;
+  top: 12px;
+  right: 56px;
+}
+
+#log-btn:hover {
+  transform: scale(1.12);
+}
+
+#log-btn:active {
+  transform: rotate(15deg) scale(0.9);
+}
+
+/*------------------------------------------------------------------基础样式---------------------------*/
+.log-panel {
+  max-width: 520px;
+}
+
+.log-body {
+  max-height: 60vh;
+  overflow-y: auto;
+  line-height: 1.7;
+  font-size: 13.5px;
+}
+
+.modal,
+.log-body {
+  overscroll-behavior: contain;
+}
+
+.log-body h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 18px 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.log-body h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 14px 0 6px;
+}
+
+.log-body h5 {
+  font-size: 13.5px;
+  font-weight: 700;
+  margin: 10px 0 4px;
+  color: var(--muted);
+}
+
+.log-body p {
+  margin: 6px 0;
+}
+
+.log-body strong {
+  font-weight: 900;
+}
+
+/*------------------------------------------------------------滚动条-------------------------------------------*/
+
+/* ----------显隐---------- */
+html {
+  /*---SBTGY-NMSL---------SBEdge---*/
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar { display: none; }
+
+html.show-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted) 55%, transparent) transparent;
+  scrollbar-gutter: stable;
+}
+html.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+html.show-scrollbar::-webkit-scrollbar-track { background: transparent; }
+html.show-scrollbar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+  border-radius: 999px;
+}
+html.show-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--muted) 70%, transparent);
+}
+html.show-scrollbar::-webkit-scrollbar-thumb:active {
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.menu-divider {
+  height: 1px;
+  margin: 6px 10px;
+  background: var(--border);
+}
+
+.menu-switch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.menu-switch-item:hover {
+  background: var(--panel-2);
+}
+
+.menu-switch-label {
+  flex: 1;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.puffer-switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: #ff8e8e;
+  cursor: pointer;
+  transition: background-color 0.35s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-theme="dark"] .puffer-switch {
+  background: #4a2626;
+}
+
+.puffer-switch[aria-checked="true"] {
+  background: #88bbff;
+}
+
+[data-theme="dark"] .puffer-switch[aria-checked="true"] {
+  background: #1e3a5a;
+}
+
+.puffer-switch:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.puffer-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #fff;
+  /*background-image: url('./hetun.png');*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*background-size: 20px 20px;*/
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(.2, 1.6, .4, 1);
+  will-change: transform;
+}
+
+[data-theme="dark"] .puffer-switch-thumb {
+  background-color: #f0f0f0;
+}
+
+.puffer-switch[aria-checked="true"] .puffer-switch-thumb {
+  transform: translateX(26px);
+}
+
+
+/*-------------------------------------------------------------------------------------BAKA!!!!!!!!!!!!!!------------------------*/
 
 .baka-container {
   position: fixed;
@@ -798,149 +1366,566 @@ body {
   width: 60px;
   height: auto;
   pointer-events: none;
-  will-change: transform, opacity;
+  /*will-change: transform, opacity;*/
   opacity: 0;
+  filter:
+    drop-shadow(0 0 8px color-mix(in srgb, var(--gold) 70%, transparent));
 }
 
-/*----------------------------------------------------------------------------------------------------------------*/
+body.baka-gold .topbar::before {
+  animation:
+    baka-topbar-gold 6.5s ease forwards,
+    baka-topbar-flow 1.2s linear infinite;
+}
+
+@keyframes baka-topbar-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/*---------------------------------------------------------依托啊！-------------------------------------------------------*/
 
 @keyframes fly1 {
-  0%   { opacity: 0; transform: translate(0px, -300px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(-100px, -100px) rotate(-90deg) scale(1.0); }
-  50%  { opacity: 1; transform: translate(100px, 100px) rotate(-180deg) scale(1.2); }
-  75%  { opacity: 1; transform: translate(-50px, 250px) rotate(-270deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(50px, 500px) rotate(-360deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(0px, -300px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(-100px, -100px) rotate(-90deg) scale(1.0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(100px, 100px) rotate(-180deg) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-50px, 250px) rotate(-270deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(50px, 500px) rotate(-360deg) scale(0.4);
+  }
 }
+
 @keyframes fly2 {
-  0%   { opacity: 0; transform: translate(400px, -200px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(200px, -400px) rotate(-120deg) scale(0.8); }
-  50%  { opacity: 1; transform: translate(-100px, -200px) rotate(-240deg) scale(1.1); }
-  75%  { opacity: 1; transform: translate(-400px, -350px) rotate(-360deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(-800px, -100px) rotate(-480deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(400px, -200px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(200px, -400px) rotate(-120deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-100px, -200px) rotate(-240deg) scale(1.1);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-400px, -350px) rotate(-360deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-800px, -100px) rotate(-480deg) scale(0.3);
+  }
 }
+
 @keyframes fly3 {
-  0%   { opacity: 0; transform: translate(-300px, 0px) rotate(0deg) scale(0.5); }
-  20%  { opacity: 1; transform: translate(100px, 50px) rotate(10deg) scale(1.0); }
-  40%  { opacity: 1; transform: translate(300px, -50px) rotate(-10deg) scale(1.1); }
-  60%  { opacity: 1; transform: translate(500px, 40px) rotate(8deg) scale(0.9); }
-  80%  { opacity: 1; transform: translate(700px, -30px) rotate(-5deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(1000px, 0px) rotate(0deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-300px, 0px) rotate(0deg) scale(0.5);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translate(100px, 50px) rotate(10deg) scale(1.0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translate(300px, -50px) rotate(-10deg) scale(1.1);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(500px, 40px) rotate(8deg) scale(0.9);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translate(700px, -30px) rotate(-5deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(1000px, 0px) rotate(0deg) scale(0.4);
+  }
 }
+
 @keyframes fly4 {
-  0%   { opacity: 0; transform: translate(300px, -300px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(0px, -100px) rotate(-60deg) scale(0.9); }
-  50%  { opacity: 1; transform: translate(-300px, 100px) rotate(-120deg) scale(1.2); }
-  75%  { opacity: 1; transform: translate(-600px, -50px) rotate(-180deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(-1000px, 200px) rotate(-240deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(300px, -300px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(0px, -100px) rotate(-60deg) scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-300px, 100px) rotate(-120deg) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-600px, -50px) rotate(-180deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-1000px, 200px) rotate(-240deg) scale(0.3);
+  }
 }
+
 @keyframes fly5 {
-  0%   { opacity: 0; transform: translate(-400px, -100px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(-100px, -300px) rotate(50deg) scale(1.1); }
-  50%  { opacity: 1; transform: translate(200px, -150px) rotate(100deg) scale(1.3); }
-  75%  { opacity: 1; transform: translate(500px, -350px) rotate(150deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(900px, -200px) rotate(200deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-400px, -100px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(-100px, -300px) rotate(50deg) scale(1.1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(200px, -150px) rotate(100deg) scale(1.3);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(500px, -350px) rotate(150deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(900px, -200px) rotate(200deg) scale(0.4);
+  }
 }
+
 @keyframes fly6 {
-  0%   { opacity: 0; transform: translate(500px, 200px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(250px, 400px) rotate(-80deg) scale(0.8); }
-  50%  { opacity: 1; transform: translate(0px, 250px) rotate(-160deg) scale(1.0); }
-  75%  { opacity: 1; transform: translate(-250px, 350px) rotate(-240deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(-600px, 500px) rotate(-320deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(500px, 200px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(250px, 400px) rotate(-80deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(0px, 250px) rotate(-160deg) scale(1.0);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-250px, 350px) rotate(-240deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-600px, 500px) rotate(-320deg) scale(0.3);
+  }
 }
+
 @keyframes fly7 {
-  0%   { opacity: 0; transform: translate(-100px, -400px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(150px, -200px) rotate(30deg) scale(1.2); }
-  50%  { opacity: 1; transform: translate(400px, -300px) rotate(60deg) scale(0.9); }
-  75%  { opacity: 1; transform: translate(650px, -150px) rotate(90deg) scale(1.1); }
-  100% { opacity: 0; transform: translate(1000px, -400px) rotate(120deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-100px, -400px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(150px, -200px) rotate(30deg) scale(1.2);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(400px, -300px) rotate(60deg) scale(0.9);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(650px, -150px) rotate(90deg) scale(1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(1000px, -400px) rotate(120deg) scale(0.4);
+  }
 }
+
 @keyframes fly8 {
-  0%   { opacity: 0; transform: translate(200px, 400px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(-50px, 200px) rotate(-45deg) scale(1.0); }
-  50%  { opacity: 1; transform: translate(-300px, 300px) rotate(-90deg) scale(1.3); }
-  75%  { opacity: 1; transform: translate(-550px, 150px) rotate(-135deg) scale(0.8); }
-  100% { opacity: 0; transform: translate(-900px, 350px) rotate(-180deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(200px, 400px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(-50px, 200px) rotate(-45deg) scale(1.0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-300px, 300px) rotate(-90deg) scale(1.3);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-550px, 150px) rotate(-135deg) scale(0.8);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-900px, 350px) rotate(-180deg) scale(0.3);
+  }
 }
+
 @keyframes fly9 {
-  0%   { opacity: 0; transform: translate(-500px, 0) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(-200px, 100px) rotate(120deg) scale(1.1); }
-  50%  { opacity: 1; transform: translate(100px, -50px) rotate(240deg) scale(1.0); }
-  75%  { opacity: 1; transform: translate(400px, 80px) rotate(360deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(800px, 0) rotate(480deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-500px, 0) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(-200px, 100px) rotate(120deg) scale(1.1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(100px, -50px) rotate(240deg) scale(1.0);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(400px, 80px) rotate(360deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(800px, 0) rotate(480deg) scale(0.4);
+  }
 }
+
 @keyframes fly10 {
-  0%   { opacity: 0; transform: translate(600px, -100px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(300px, -300px) rotate(-150deg) scale(0.8); }
-  50%  { opacity: 1; transform: translate(0px, -150px) rotate(-300deg) scale(1.2); }
-  75%  { opacity: 1; transform: translate(-300px, -250px) rotate(-450deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(-700px, -50px) rotate(-600deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(600px, -100px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(300px, -300px) rotate(-150deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(0px, -150px) rotate(-300deg) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-300px, -250px) rotate(-450deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-700px, -50px) rotate(-600deg) scale(0.3);
+  }
 }
+
 @keyframes fly11 {
-  0%   { opacity: 0; transform: translate(-200px, -100px) rotate(0deg) scale(0.3); }
-  30%  { opacity: 1; transform: translate(100px, -200px) rotate(180deg) scale(1.8); }
-  70%  { opacity: 1; transform: translate(400px, 50px) rotate(360deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(800px, -150px) rotate(540deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, -100px) rotate(0deg) scale(0.3);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translate(100px, -200px) rotate(180deg) scale(1.8);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translate(400px, 50px) rotate(360deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(800px, -150px) rotate(540deg) scale(0.4);
+  }
 }
+
 @keyframes fly12 {
-  0%   { opacity: 0; transform: translate(300px, -200px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(100px, -400px) rotate(-70deg) scale(1.0); }
-  50%  { opacity: 1; transform: translate(-100px, -250px) rotate(-140deg) scale(1.2); }
-  75%  { opacity: 1; transform: translate(-300px, -380px) rotate(-210deg) scale(0.8); }
-  100% { opacity: 0; transform: translate(-600px, -150px) rotate(-280deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(300px, -200px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(100px, -400px) rotate(-70deg) scale(1.0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-100px, -250px) rotate(-140deg) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-300px, -380px) rotate(-210deg) scale(0.8);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-600px, -150px) rotate(-280deg) scale(0.3);
+  }
 }
+
 @keyframes fly13 {
-  0%   { opacity: 0; transform: translate(-100px, 0px) rotate(0deg) scale(0.6); }
-  25%  { opacity: 1; transform: translate(150px, -200px) rotate(90deg) scale(1.2); }
-  50%  { opacity: 1; transform: translate(400px, 0px) rotate(180deg) scale(1.0); }
-  75%  { opacity: 1; transform: translate(650px, 200px) rotate(270deg) scale(0.8); }
-  100% { opacity: 0; transform: translate(900px, 0px) rotate(360deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-100px, 0px) rotate(0deg) scale(0.6);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(150px, -200px) rotate(90deg) scale(1.2);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(400px, 0px) rotate(180deg) scale(1.0);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(650px, 200px) rotate(270deg) scale(0.8);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(900px, 0px) rotate(360deg) scale(0.4);
+  }
 }
+
 @keyframes fly14 {
-  0%   { opacity: 0; transform: translate(400px, 300px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(150px, 100px) rotate(-90deg) scale(0.8); }
-  50%  { opacity: 1; transform: translate(-100px, 200px) rotate(-180deg) scale(1.1); }
-  75%  { opacity: 1; transform: translate(-350px, 50px) rotate(-270deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(-700px, 300px) rotate(-360deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(400px, 300px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(150px, 100px) rotate(-90deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-100px, 200px) rotate(-180deg) scale(1.1);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-350px, 50px) rotate(-270deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-700px, 300px) rotate(-360deg) scale(0.3);
+  }
 }
+
 @keyframes fly15 {
-  0%   { opacity: 0; transform: translate(0px, 300px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(200px, 100px) rotate(90deg) scale(1.1); }
-  50%  { opacity: 1; transform: translate(400px, -100px) rotate(180deg) scale(1.3); }
-  75%  { opacity: 1; transform: translate(600px, 50px) rotate(270deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(900px, -200px) rotate(360deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(0px, 300px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(200px, 100px) rotate(90deg) scale(1.1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(400px, -100px) rotate(180deg) scale(1.3);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(600px, 50px) rotate(270deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(900px, -200px) rotate(360deg) scale(0.4);
+  }
 }
+
 @keyframes fly16 {
-  0%   { opacity: 0; transform: translate(200px, -300px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(0px, -500px) rotate(-30deg) scale(0.9); }
-  50%  { opacity: 1; transform: translate(-200px, -350px) rotate(-60deg) scale(1.3); }
-  75%  { opacity: 1; transform: translate(-400px, -450px) rotate(-90deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(-700px, -200px) rotate(-120deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(200px, -300px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(0px, -500px) rotate(-30deg) scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-200px, -350px) rotate(-60deg) scale(1.3);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-400px, -450px) rotate(-90deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-700px, -200px) rotate(-120deg) scale(0.3);
+  }
 }
+
 @keyframes fly17 {
-  0%   { opacity: 0; transform: translate(-400px, 100px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(-150px, -100px) rotate(80deg) scale(1.1); }
-  50%  { opacity: 1; transform: translate(100px, 50px) rotate(160deg) scale(1.2); }
-  75%  { opacity: 1; transform: translate(350px, -50px) rotate(240deg) scale(0.9); }
-  100% { opacity: 0; transform: translate(700px, 100px) rotate(320deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-400px, 100px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(-150px, -100px) rotate(80deg) scale(1.1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(100px, 50px) rotate(160deg) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(350px, -50px) rotate(240deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(700px, 100px) rotate(320deg) scale(0.4);
+  }
 }
+
 @keyframes fly18 {
-  0%   { opacity: 0; transform: translate(500px, -200px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(250px, 0px) rotate(-100deg) scale(1.0); }
-  50%  { opacity: 1; transform: translate(0px, -150px) rotate(-200deg) scale(0.8); }
-  75%  { opacity: 1; transform: translate(-250px, -50px) rotate(-300deg) scale(1.1); }
-  100% { opacity: 0; transform: translate(-600px, -200px) rotate(-400deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(500px, -200px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(250px, 0px) rotate(-100deg) scale(1.0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(0px, -150px) rotate(-200deg) scale(0.8);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-250px, -50px) rotate(-300deg) scale(1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-600px, -200px) rotate(-400deg) scale(0.3);
+  }
 }
+
 @keyframes fly19 {
-  0%   { opacity: 0; transform: translate(-200px, -200px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(100px, -400px) rotate(50deg) scale(1.3); }
-  50%  { opacity: 1; transform: translate(400px, -200px) rotate(100deg) scale(0.9); }
-  75%  { opacity: 1; transform: translate(700px, -350px) rotate(150deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(1100px, -100px) rotate(200deg) scale(0.4); }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, -200px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(100px, -400px) rotate(50deg) scale(1.3);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(400px, -200px) rotate(100deg) scale(0.9);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(700px, -350px) rotate(150deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(1100px, -100px) rotate(200deg) scale(0.4);
+  }
 }
+
 @keyframes fly20 {
-  0%   { opacity: 0; transform: translate(300px, 100px) rotate(0deg) scale(0.5); }
-  25%  { opacity: 1; transform: translate(50px, 300px) rotate(-40deg) scale(0.8); }
-  50%  { opacity: 1; transform: translate(-200px, 150px) rotate(-80deg) scale(1.2); }
-  75%  { opacity: 1; transform: translate(-450px, 250px) rotate(-120deg) scale(1.0); }
-  100% { opacity: 0; transform: translate(-800px, 400px) rotate(-160deg) scale(0.3); }
+  0% {
+    opacity: 0;
+    transform: translate(300px, 100px) rotate(0deg) scale(0.5);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translate(50px, 300px) rotate(-40deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-200px, 150px) rotate(-80deg) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-450px, 250px) rotate(-120deg) scale(1.0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-800px, 400px) rotate(-160deg) scale(0.3);
+  }
 }
